@@ -18,7 +18,9 @@ builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<User
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<RegisterService>();
+// Services
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

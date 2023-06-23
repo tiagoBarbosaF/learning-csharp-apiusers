@@ -8,18 +8,26 @@ namespace ApiUsers.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private RegisterService _registerService;
+    private UserService _userService;
 
-    public UserController(RegisterService registerService)
+    public UserController(UserService userService)
     {
-        _registerService = registerService;
+        _userService = userService;
     }
 
-    [HttpPost]
+    [HttpPost("register")]
     public async Task<IActionResult> PutUser(CreateUserDto userDto)
     {
-        await _registerService.Register(userDto);
-        
+        await _userService.Register(userDto);
+
         return Ok("User registered.");
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginUserDto loginDto)
+    {
+        var token = await _userService.Login(loginDto);
+
+        return Ok($"token: {token}");
     }
 }
