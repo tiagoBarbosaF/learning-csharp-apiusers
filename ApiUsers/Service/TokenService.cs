@@ -9,6 +9,13 @@ namespace ApiUsers.Service;
 
 public class TokenService
 {
+    private IConfiguration _configuration;
+
+    public TokenService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
     public string GenerateToken(User user)
     {
         Claim[] claims =
@@ -18,7 +25,7 @@ public class TokenService
             new("birthdate", user.Birthdate.ToString(CultureInfo.CurrentCulture))
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("23489713riu1r089r312r8123uh9r8dfhqiu049"));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]));
 
         var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
